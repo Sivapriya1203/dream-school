@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react';
-import { Grid, Typography, Box, Stack, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Grid, Typography, Box } from '@mui/material';
 import axios from 'axios';
 import config from '../../config';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
-import MainCard from 'components/MainCard';
-
-import { Link } from 'react-router-dom';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import TeacherProfile from './TeacherProfile';
 
 export default function DashboardDefault() {
   const [studentsCount, setStudentsCount] = useState(0);
   const [staffsCount, setStaffsCount] = useState(0);
-  const [totalRevenue, setTotalRevenue] = useState();
-  const [selectedYear,setSelectedYear] = useState('2024-2025')
-  const [siblingCount,setSiblingCount] = useState();
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
+    // Fetching data for Student Attendance
     axios.get(`${config.apiURL}/dashboard/feePendingStudents`)
       .then((res) => {
         const count = res.data.length;
@@ -24,6 +22,7 @@ export default function DashboardDefault() {
         console.error('Error fetching students:', error);
       });
 
+    // Fetching data for Classwise First Mark
     axios.get(`${config.apiURL}/staffs/getStaffs`)
       .then((res) => {
         const count = res.data.length;
@@ -32,98 +31,70 @@ export default function DashboardDefault() {
       .catch((error) => {
         console.error('Error fetching staff:', error);
       });
+
+    // Fetching data for Bar Chart
+    axios.get(`${config.apiURL}/dashboard/chartData`)
+      .then((res) => {
+        setChartData(res.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching chart data:', error);
+      });
   }, []);
 
-  useEffect(()=>{
-    axios.get(`${config.apiURL}/dashboard/totalPaidAmount/${selectedYear}`)
-      .then((res) => {
-        setTotalRevenue(res.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching staff:', error);
-      });
-  },[])
-
-  useEffect(()=>{
-    axios.get(`${config.apiURL}/students/getSiblings`)
-      .then((res) => {
-        setSiblingCount(res.data);
-        console.log("Sibling :",siblingCount)
-      })
-      .catch((error) => {
-        console.error('Error fetching staff:', error);
-      });
-  },[])
-
-  
-
   return (
-    <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-      {/* row 1 */}
-      <Grid item xs={12} sx={{ mb: -2.25 }}>
-        <Typography variant="h5">Dashboard</Typography>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <Link to='/feePendingStu'>
-        <AnalyticEcommerce title="Total Pending Students" count={studentsCount} extra="35,000" /></Link>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Staffs" count={staffsCount}extra="8,900" />
-      </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-  <AnalyticEcommerce
-    title="Total revenue"
-    count={totalRevenue ? `${totalRevenue.total_paid_amount}` : "Loading..."}
-    // year={
-    //   <FormControl sx={{ minWidth: 120 }}>
-    //     {/* Dropdown for selecting year */}
-    //     <InputLabel id="year-select-label">Year</InputLabel>
-    //     <Select
-    //       labelId="year-select-label"
-    //       id="year-select"
-    //       value={selectedYear}
-    //       onChange={(e) => setSelectedYear(e.target.value)}
-    //     >
-    //       {/* Render your year options here */}
-    //       <MenuItem value={'2024-2025'}>2024-2025</MenuItem>
-    //       {/* Add other years as needed */}
-    //     </Select>
-    //   </FormControl>
-    // }
-    isLoss={false} // Assuming revenue is not a loss
-    color="warning" // Adjust color as needed
-    extra="1,943" // Additional information, you might want to change this based on actual data
-  />
-</Grid>
+    <Grid container spacing={1} sx={{ backgroundColor: 'lightblue', padding: 1, borderRadius: 2 }}>
 
-      <Grid item xs={12} sm={6} md={4} lg={3}>
-        <Link to='/sibStu'>
-        <AnalyticEcommerce title="Total profit" count={siblingCount ? `${siblingCount.siblingsCount}` : "Loading..."}  isLoss color="warning"  />
-        </Link>
+
+      {/* Profile section */}
+      <Grid item xs={12} md={6} container justifyContent="center">
+        <Box sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <TeacherProfile sx={{ width: '100%', height: '100%' }} />
+        </Box>
       </Grid>
 
-      {/* row 2 */}
-      <Grid item xs={12} md={7} lg={8}>
-       
-      </Grid>
-      <Grid item xs={12} md={5} lg={4}>
-        <Grid container alignItems="center" justifyContent="space-between">
-          <Grid item>
-            <Typography variant="h5">Income Overview</Typography>
-          </Grid>
-          <Grid item />
+      {/* Student Attendance and Classwise First Mark */}
+      <Grid item container xs={12} md={6} spacing={2}>
+        {/* Student Attendance */}
+        <Grid item xs={12} md={6}>
+          <AnalyticEcommerce
+            title="Student Attendance"
+            count={studentsCount}
+            extra="35,000"
+            color="primary"
+            borderColor="primary.main"
+            sx={{ backgroundColor: '#e3f2fd', borderColor: 'primary.main', borderWidth: 1, borderStyle: 'solid', borderRadius: 2 }}
+          />
         </Grid>
-        <MainCard sx={{ mt: 2 }} content={false}>
-          <Box sx={{ p: 3, pb: 0 }}>
-            <Stack spacing={2}>
-              <Typography variant="h6" color="text.secondary">
-               Teachers Dashboard
-              </Typography>
-             
-            </Stack>
+
+        {/* Classwise First Mark */}
+        <Grid item xs={12} md={6}>
+          <AnalyticEcommerce
+            title="Classwise First Mark"
+            count={staffsCount}
+            extra="8,900"
+            color="secondary"
+            borderColor="secondary.main"
+            sx={{ backgroundColor: '#fce4ec', borderColor: 'secondary.main', borderWidth: 1, borderStyle: 'solid', borderRadius: 2 }}
+          />
+        </Grid>
+
+        {/* Bar Chart */}
+        <Grid item xs={12}>
+          <Box sx={{ backgroundColor: '#ffffff', padding: 2, borderRadius: 2 }}>
+            <ResponsiveContainer width="100%" height={400}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" stroke="#5550bd" />
+                <YAxis stroke="#5550bd" />
+                <Tooltip contentStyle={{ backgroundColor: '#5550bd', color: '#fff' }} />
+                <Legend />
+                <Bar dataKey="value1" fill="#8884d8" />
+                <Bar dataKey="value2" fill="#82ca9d" />
+              </BarChart>
+            </ResponsiveContainer>
           </Box>
-       
-        </MainCard>
+        </Grid>
       </Grid>
     </Grid>
   );

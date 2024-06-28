@@ -10,7 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Checkbox, FormControl, FormControlLabel, TextField } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Students() {
     const staff_id = sessionStorage.getItem('staff_id');
@@ -41,12 +41,39 @@ function Students() {
         }));
     };
 
+    const [isHovered, setIsHovered] = useState({
+        details: false,
+        van: false,
+    });
 
-        const navigate = useNavigate();
-      
-        const handleSubmit1= () => {
-          navigate('/classstudents');
-        };
+    const handleMouseEnter = (button) => {
+        setIsHovered((prevState) => ({
+            ...prevState,
+            [button]: true,
+        }));
+    };
+
+    const handleMouseLeave = (button) => {
+        setIsHovered((prevState) => ({
+            ...prevState,
+            [button]: false,
+        }));
+    };
+
+    const buttonStyle = (hovered) => ({
+        backgroundColor: hovered ? '#13c3c2' : '#1677ff',
+        color: 'black',
+        padding: '10px 20px',
+        textAlign: 'center',
+        textDecoration: 'none',
+        display: 'inline-block',
+        fontSize: '16px',
+        margin: '4px 2px',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        border: 'none',
+    });
+
     const handleMarkAllPresentChange = (e) => {
         const isChecked = e.target.checked;
         setMarkAllPresent(isChecked);
@@ -71,9 +98,9 @@ function Students() {
                 const student = studentData.find((s) => s.stu_id === parseInt(studentId));
 
                 const formData = {
-                  staff_id:staff_id,
+                    staff_id: staff_id,
                     stu_id: student.stu_id,
-                    cls_id: student.cls_id, // Assuming cls_id is available in studentData
+                    cls_id: student.cls_id,
                     date: attendanceDate,
                     status: status,
                 };
@@ -83,7 +110,6 @@ function Students() {
                 await axios.post(`${config.apiURL}/students/studentsattenance`, formData);
 
                 console.log(`Updated attendance for student ${studentId}:`, formData);
-                // Optionally update state or show success message
             }
 
             console.log("Attendance data submitted successfully!");
@@ -111,11 +137,29 @@ function Students() {
             border: 0,
         },
     }));
-
+  
     return (
         <div>
-        <Link to={`/attenancedetails/${staff_id}`} ><Button>details</Button></Link>  
-        <Link to={`/vanattenance/${staff_id}`} ><Button>van attenance</Button></Link>  
+            <Link to={`/attenancedetails/${staff_id}`}>
+                <Button
+                    style={buttonStyle(isHovered.details)}
+                    onMouseEnter={() => handleMouseEnter('details')}
+                    onMouseLeave={() => handleMouseLeave('details')}
+                >
+                    Attendance Details
+                </Button>
+            </Link>
+            <Link to={`/vanattenance/${staff_id}`}>
+                <Button
+                    style={buttonStyle(isHovered.van)}
+                    onMouseEnter={() => handleMouseEnter('van')}
+                    onMouseLeave={() => handleMouseLeave('van')}
+                >
+                    Van Attendance
+                </Button>
+            </Link>
+            <br /><br /><br />
+
             <form onSubmit={handleSubmit}>
                 <TextField
                     type="date"
@@ -133,7 +177,6 @@ function Students() {
                             <TableRow>
                                 <StyledTableCell align="center">STUDENT ID</StyledTableCell>
                                 <StyledTableCell align="center">STUDENT NAME</StyledTableCell>
-                                <StyledTableCell align='center'>DATE</StyledTableCell>
                                 <StyledTableCell align="center">
                                     <FormControlLabel
                                         control={
@@ -155,16 +198,6 @@ function Students() {
                                         {data.stu_id}
                                     </StyledTableCell>
                                     <StyledTableCell align="center">{data.stu_name}</StyledTableCell>
-                                    <StyledTableCell align='center'>
-                                        <TextField
-                                            type="date"
-                                            value={attendanceState.attendanceDate}
-                                            onChange={(e) => setAttendanceState({ ...attendanceState, attendanceDate: e.target.value })}
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                        />
-                                    </StyledTableCell>
                                     <StyledTableCell align="center">
                                         <FormControl component="fieldset">
                                             <FormControlLabel
@@ -202,20 +235,9 @@ function Students() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {/* <Button variant="contained" color="success" type="submit" className="mt-4">
+                  <Button variant="contained" color="success" type="submit" className="mt-4">
                     Submit
-                </Button> */}
-   
-   <Button
-        variant="contained"
-        color="success"
-        type="submit"
-        className="mt-4"
-        onClick={handleSubmit1}
-        
-      >
-        Submit
-      </Button>
+                </Button>
 
             </form>
         </div>
@@ -223,3 +245,4 @@ function Students() {
 }
 
 export default Students;
+

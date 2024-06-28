@@ -106,10 +106,36 @@ function VanAttendance() {
             border: 0,
         },
     }));
+    const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const buttonStyle = {
+    backgroundColor: isHovered ? '#13c3c2' : '#1677ff', 
+    color: 'white',
+    padding: '10px 20px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    display: 'inline-block',
+    fontSize: '16px',
+    margin: '4px 2px',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    border: 'none',
+  };
 
     return (
         <div>
-            <Link to={`/vanattenancedetails/${staff_id}`}><Button>details</Button></Link>
+            {/* <Link to={`/vanattenancedetails/${staff_id}`}><Button>details</Button></Link> */}
+            <Link to={`/vanattenancedetails/${staff_id}`}>
+      <Button style={buttonStyle} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}> Details </Button>
+    </Link><br/><br/>
            
             <form onSubmit={handleSubmit}>
                 <TextField

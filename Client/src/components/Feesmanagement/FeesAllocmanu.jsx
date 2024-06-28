@@ -105,17 +105,27 @@ function FeesAllocmanu() {
               type="submit"
               variant="contained"
               fullWidth
-              style={{ marginTop: '20px', backgroundColor: '#4CAF50', color: 'white' }}
+              style={{ marginTop: '20px', backgroundColor: '#4CAF50', color: 'white', width:'100px' }}
             >
               Submit
             </Button>
           </Grid>
         </Grid>
-      </form>
-
-      {classes.map((data) => (
-        <div key={data.cls_id}><h1>the fees for {data.cls_name} was {data.tution_fees}</h1></div>
-      ))}
+      </form><br/><br/>
+      <Grid container spacing={2}>
+       {/* {classes.map((data) => ( 
+        <div key={data.cls_id}><h6>the fees for {data.cls_name} was {data.tution_fees}</h6></div>  */}
+       
+       {classes.map((data) => (
+          <Grid data xs={12} sm={6} key={data.cls_id}>
+            <div style={{ border: '1px solid black', padding: '2px',backgroundColor:'lightgray' }}>
+              <h6>{data.cls_name}</h6>
+              <p>The fees for {data.cls_name} was {data.tution_fees}</p>
+            </div>
+          </Grid>
+        ))}
+      </Grid>
+    
     </div>
   );
 }

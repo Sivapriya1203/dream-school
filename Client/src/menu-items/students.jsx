@@ -59,22 +59,22 @@ const teacherdomain={
   children: [
    
     {
-      id: 'class-students',
-      title: 'class-Students',
+      id: 'Classstudent',
+      title: 'Class Students',
       type: 'item',
       url: '/classstudents',
       icon: icons.SchoolIcon
     },
     {
       id: 'Attendance',
-      title: 'Attendance',
+      title: 'Attendance Detail',
       type: 'item',
       url: '/attendance',
       icon: icons.SchoolIcon
     },
     {
       id: 'Mark allocation',
-      title: 'Mark allocation',
+      title: 'Mark Allocation',
       type: 'item',
       url: '/exams',
       icon: icons.SchoolIcon

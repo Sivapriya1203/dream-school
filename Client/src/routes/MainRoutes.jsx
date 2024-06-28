@@ -31,6 +31,7 @@ import Staffattenance from 'components/EmployeField/Staffattenance';
 import Staffdetail from 'components/EmployeField/Staffdetail';
 import Vanattenance from 'components/EmployeField/Vanattenance';
 import Vanattenancedetails from 'components/EmployeField/Vanattenancedetails';
+import Classstudents from 'components/EmployeField/Classstudents';
 // import Mystudents from 'components/EmployeField/Mystudents';
 
 const Login = Loadable(lazy(() => import('pages/authentication/login')));
@@ -220,7 +221,7 @@ const employeeRoutes = {
     // },
 
     {
-      path: '/classstudents',
+      path: '/attendance',
       element: <Students/>
     },
     {
@@ -234,6 +235,10 @@ const employeeRoutes = {
     {
       path: '/profile',
       element: <Staffattenance/>
+    },
+    {
+      path:'/classstudents',
+      element:<Classstudents/>
     },
     {
       path: '/exams',
