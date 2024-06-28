@@ -3,8 +3,10 @@ import { Grid, TextField, Button } from '@mui/material';
 import axios from 'axios';
 import config from '../../../config';
 import { useNavigate } from 'react-router';
+import { useSnackbar } from 'notistack';
 
 function PayFeesLog({ data, onClose }) {
+    const { enqueueSnackbar } = useSnackbar();
     const [studentinfo, setStudentinfo] = useState({
         fees_id: data.fees_id,
         roll_no: data ? data.roll_no : "",
@@ -70,6 +72,8 @@ function PayFeesLog({ data, onClose }) {
             })
             .catch((err) => {
                 console.log("Error.", err);
+                
+             enqueueSnackbar(err, { variant: 'error' });
             });
     };
 

@@ -4,9 +4,10 @@ import axios from 'axios';
 import moment from 'moment';
 import config from '../../config'
 import { useNavigate } from 'react-router';
-
+import { useSnackbar } from 'notistack';
 function EditAlloc({data,onClose}) {
     const navigate =useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
     console.log("AllocEditData :",data);
     const [staffData, setStaffData] = useState([]);
     const [academicYears, setAcademicYears] = useState([]);
@@ -84,6 +85,7 @@ function EditAlloc({data,onClose}) {
             })
             .catch((err) => {
                 console.log("Error fetching staff data:", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
             axios.get(`${config.apiURL}/students/getStudents`)
             .then((res)=>{
@@ -91,6 +93,7 @@ function EditAlloc({data,onClose}) {
             })
             .catch((err)=>{
               console.log('The error is :',err);
+              enqueueSnackbar(err, { variant: 'error' });
             })
             axios.get(`${config.apiURL}/clsAndSec/getClass`)
             .then((res)=>{
@@ -98,6 +101,7 @@ function EditAlloc({data,onClose}) {
             })
             .catch((err)=>{
               console.log('The error is :',err);
+              enqueueSnackbar(err, { variant: 'error' });
             })
 
     
@@ -114,6 +118,7 @@ function EditAlloc({data,onClose}) {
             })
             .catch((err) => {
                 console.log('The error is :', err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
         }
     }, [stu_allocInfo.cls_id]);
@@ -148,6 +153,7 @@ function EditAlloc({data,onClose}) {
             .catch((err) => {
                 console.log("Error:", err);
                 console.log("Data:", stu_allocInfo);
+                enqueueSnackbar(err, { variant: 'error' });
             });
           
     };

@@ -10,7 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Dialog, DialogActions, DialogContent, FormControl, Grid, Select, TextField } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UpdateStudent from './UpdateStudent';
 import config  from '../../config';
 import Pagination from '@mui/material/Pagination';
@@ -18,6 +18,7 @@ import Stack from '@mui/material/Stack';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useSnackbar } from 'notistack';
 
 function AllStudents() {
   const [roleData, setRoleData] = useState([]);
@@ -28,14 +29,19 @@ function AllStudents() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchedVal, setSearchedVal] = useState('');
 
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     Axios.get(`${config.apiURL}/students/getStudents`)
       .then((res) => {
         setRoleData(res.data);
         console.log("Response data :",res.data)
+        // enqueueSnackbar('Book Created successfully', { variant: 'success' });
+        // navigate('/');
       })
       .catch((err) => {
         console.log('Error:', err);
+        
       });
   }, [openUpdate,dlt]);
 
@@ -64,6 +70,8 @@ function AllStudents() {
       if(selectData){
         setUpdateData(selectData);
         setOpenUpdate(true)
+       
+        navigate("/allStudents")
       }
   }
 
@@ -71,10 +79,15 @@ function AllStudents() {
     Axios.delete(`${config.apiURL}/students/deleteStudent/${id}`)
       .then((res) => {
         console.log("Deleted successfully :")
+        enqueueSnackbar('Data deleted sucessfully', { variant: 'success' });
         setDlt(true)
+        navigate("/allStudents")
+      
       })
       .catch((err) => {
         console.log('Error:', err);
+        enqueueSnackbar('Error', { variant: 'error' });
+
       });
   }
 

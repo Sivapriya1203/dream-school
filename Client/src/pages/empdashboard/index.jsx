@@ -4,6 +4,7 @@ import axios from 'axios';
 import config from '../../config';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
 import MainCard from 'components/MainCard';
+import { useSnackbar } from 'notistack';
 
 import { Link } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ export default function DashboardDefault() {
   const [totalRevenue, setTotalRevenue] = useState();
   const [selectedYear,setSelectedYear] = useState('2024-2025')
   const [siblingCount,setSiblingCount] = useState();
-
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     axios.get(`${config.apiURL}/dashboard/feePendingStudents`)
       .then((res) => {
@@ -22,6 +23,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching students:', error);
+        enqueueSnackbar('Error fetching students:', { variant: 'error' });
       });
 
     axios.get(`${config.apiURL}/staffs/getStaffs`)
@@ -31,6 +33,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching staff:', error);
+        enqueueSnackbar('Error fetching staff:', { variant: 'error' });
       });
   }, []);
 
@@ -41,6 +44,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching staff:', error);
+        enqueueSnackbar('Error fetching staff:', { variant: 'error' });
       });
   },[])
 
@@ -52,6 +56,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching staff:', error);
+        enqueueSnackbar('Error fetching staff:', { variant: 'error' });
       });
   },[])
 

@@ -17,7 +17,7 @@ import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import { useSnackbar } from 'notistack';
 function DepartmentAlloc() {
     const [deptData, setDeptData] = useState([]);
     const [openUpdate, setOpenUpdate] = useState(false);
@@ -26,7 +26,7 @@ function DepartmentAlloc() {
   const [dataPerPage, setDataPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchedVal, setSearchedVal] = useState('');
-
+  const { enqueueSnackbar } = useSnackbar();
     useEffect(() => {
         Axios.get(`${config.apiURL}/department/getDept`)
             .then((res) => {
@@ -34,6 +34,7 @@ function DepartmentAlloc() {
             })
             .catch((err) => {
                 console.log('Error:', err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     }, [openUpdate, dlt]);
 
@@ -61,7 +62,9 @@ function DepartmentAlloc() {
         if (selectData) {
             setUpdateData(selectData);
             setOpenUpdate(true);
+           
         }
+       
     };
 
 
@@ -88,15 +91,18 @@ function DepartmentAlloc() {
     
 
    
-    const handleDelete = (id) => {
+    const handleDelete = (e,id) => {
+        e.preventDefault()
         Axios.delete(`${config.apiURL}/department/deleteDept/${id}`)
             .then((res) => {
                 console.log("Deleted successfully :", res.data);
                 setDlt(true);
+                enqueueSnackbar('Data Deleted sucessfully', { variant: 'success' });
             })
             .catch((err) => {
                 console.log('Error deleting student:', err);
-                alert('Failed to delete student. Please try again later.');
+               
+                enqueueSnackbar('Failed to delete student. Please try again later.', { variant: 'error' });
             });
     };
     
@@ -143,7 +149,7 @@ function DepartmentAlloc() {
                                 <StyledTableCell align="right">{row.dept_name}</StyledTableCell>
                                 <StyledTableCell align="right">
                                     <Button variant="contained" color="info" startIcon={<EditIcon/>} onClick={() => handleUpdate(row.dept_id)}>Edit</Button>
-                                    <Button variant="contained" color="error"startIcon={<DeleteIcon/>} onClick={() => handleDelete(row.dept_id)}>Delete</Button>
+                                    <Button variant="contained" color="error"startIcon={<DeleteIcon/>} onClick={(e) => handleDelete(e,row.dept_id)}>Delete</Button>
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}

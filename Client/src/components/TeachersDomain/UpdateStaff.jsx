@@ -3,8 +3,9 @@ import { Grid, TextField, Button, MenuItem } from '@mui/material';
 import axios from 'axios';
 import config from '../../config';
 import { Done } from '@mui/icons-material';
-
+import { useSnackbar } from 'notistack';
 function UpdateStaff({ data, onClose }) {
+    const { enqueueSnackbar } = useSnackbar();
     const [staffInfo, setStaffInfo] = useState({
         staff_id: data ? data.staff_id : "",
         dept_id: data ? data.dept_id : "",
@@ -50,6 +51,7 @@ function UpdateStaff({ data, onClose }) {
             })
             .catch((err) => {
                 console.log("Error fetching role data:", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     }, []);
 
@@ -95,9 +97,11 @@ function UpdateStaff({ data, onClose }) {
         .then((res) => {
             console.log("Success");
             onClose();
+            enqueueSnackbar('Staff data updated sucessfully', { variant: 'success' });
         })
         .catch((err) => {
             console.log("Error:", err);
+            enqueueSnackbar(err, { variant: 'error' });
         });
     };
 

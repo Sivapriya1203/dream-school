@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../../config';
-
+import { useSnackbar } from 'notistack';
 const Markallocation = () => {
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
@@ -11,7 +11,7 @@ const Markallocation = () => {
   const [examNames, setExamNames] = useState([]);
 
   const staff_id = sessionStorage.getItem('staff_id');
-
+  const { enqueueSnackbar } = useSnackbar();
   // Fetch students and exams on component mount
   useEffect(() => {
     const fetchStudents = async () => {
@@ -30,7 +30,10 @@ const Markallocation = () => {
         setStudents(studentsWithMarks);
         setFilteredStudents(studentsWithMarks);
       } catch (error) {
+        
+        enqueueSnackbar(error, { variant: 'error' });
         console.log('Error fetching students:', error);
+
       }
     };
 
@@ -40,6 +43,7 @@ const Markallocation = () => {
         setExamNames(response.data);
       } catch (error) {
         console.error('Error fetching exams:', error);
+        enqueueSnackbar(error, { variant: 'error' });
       }
     };
 
@@ -84,9 +88,10 @@ const Markallocation = () => {
 console.log(dataToSave)
     try {
       await axios.post(`${config.apiURL}/students/saveStudentMarks`, dataToSave);
-      alert('Marks saved successfully!');
+      enqueueSnackbar('Marks saved successfully', { variant: 'success' });
     } catch (error) {
       console.error('There was an error saving the marks!', error);
+      enqueueSnackbar(error, { variant: 'error' });
     }
   };
 

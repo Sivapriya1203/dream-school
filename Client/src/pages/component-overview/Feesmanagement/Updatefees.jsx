@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Grid, MenuItem, TextField, Button } from '@mui/material';
 import axios from 'axios';
 import config from '../../../config';
-
+import { useSnackbar } from 'notistack';
 function Updatefees({ data, onClose }) {
+    const { enqueueSnackbar } = useSnackbar();
     const [rollno, setRollno] = useState([]);
     const [studentinfo, setStudentinfo] = useState({
         roll_no: data ? data.roll_no : "",
@@ -25,6 +26,7 @@ function Updatefees({ data, onClose }) {
             })
             .catch((err) => {
                 console.log("Error fetching Class data", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     }, []);
 
@@ -89,6 +91,7 @@ function Updatefees({ data, onClose }) {
             })
             .catch((err) => {
                 console.log("error update fees.");
+                enqueueSnackbar("error update fees.", { variant: 'error' });
             });
     };
 

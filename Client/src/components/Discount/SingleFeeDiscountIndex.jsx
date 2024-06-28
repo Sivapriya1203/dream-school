@@ -14,13 +14,13 @@ import config  from '../../config';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import EditDiscount from './EditDiscount';
-
+import { useSnackbar } from 'notistack';
 function SingleFeeDiscountIndex() {
   const [discountData,setDiscountData] = useState([]);
   const {fees_id} = useParams();
   const [updateData,setUpdateData] = useState([]);
   const [openDiscount,setOpenDiscount] = useState(false);
-
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(()=>{
     axios.get(`${config.apiURL}/discount/getDiscountByFeesId/${fees_id}`)
     .then((res)=>{
@@ -28,6 +28,7 @@ function SingleFeeDiscountIndex() {
     })
     .catch((err)=>{
       console.log("Error fetching discount data.")
+      enqueueSnackbar(err, { variant: 'error' });
     })
   },[openDiscount]);
 

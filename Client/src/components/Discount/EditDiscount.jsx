@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Grid, MenuItem, TextField, Button } from '@mui/material';
 import axios from 'axios';
 import config from '../../config';
+import { useSnackbar } from 'notistack';
 
 function EditDiscount({ data, onClose }) {
+    const { enqueueSnackbar } = useSnackbar();
     const [formData, setFormData] = useState({
         fees_id: data.fees_id,
         roll_no: data ? data.roll_no : "",
@@ -73,10 +75,12 @@ function EditDiscount({ data, onClose }) {
         axios.put(`${config.apiURL}/discount/updateDiscount/${data.discount_id}`, payload)
             .then((res) => {
                 console.log("Data Saved.");
+                enqueueSnackbar('Data saved', { variant: 'success' });
                 onClose();
             })
             .catch((err) => {
                 console.log("Error.", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     };
 

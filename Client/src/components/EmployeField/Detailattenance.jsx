@@ -2,10 +2,11 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import config from '../../config'
 import { useParams } from 'react-router'
-
+import { useSnackbar } from 'notistack';
 function Detailattenance() {
 
     const {staff_id} = useParams()
+    const { enqueueSnackbar } = useSnackbar();
 
     const [attendanceData,setAttendancedata]= useState([])
     useEffect(()=>{
@@ -16,6 +17,7 @@ function Detailattenance() {
         })
         .catch((err)=>{
             console.log(err)
+            enqueueSnackbar(err, { variant: 'error' });
         })
 
     },[staff_id,config.apiURL])

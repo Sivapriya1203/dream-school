@@ -8,12 +8,14 @@ import MonthlyBarChart from './MonthlyBarChart';
 import UniqueVisitorCard from './UniqueVisitorCard';
 import { Link } from 'react-router-dom';
 import { PiStudent } from "react-icons/pi";
+import { useSnackbar } from 'notistack';
 import Button from '@mui/material/Button';
 
 import { IoPeopleSharp } from "react-icons/io5";
 import { IoPerson } from "react-icons/io5";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 export default function DashboardDefault() {
+  const { enqueueSnackbar } = useSnackbar();
   const [studentsCount, setStudentsCount] = useState(0);
   const [staffsCount, setStaffsCount] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState();
@@ -30,6 +32,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching students:', error);
+       
       });
 
       
@@ -41,6 +44,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching staff:', error);
+
       });
   }, []);
  
@@ -52,6 +56,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching staff:', error);
+ 
       });
   },[])
 
@@ -63,6 +68,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching staff:', error);
+   
       });
   },[])
 
@@ -75,6 +81,7 @@ export default function DashboardDefault() {
     })
     .catch((error)=>{
       console.error('Error fetching staff:', error);
+   
     })
   },[])
 
@@ -88,6 +95,7 @@ export default function DashboardDefault() {
     })
     .catch((error)=>{
       console.error('Error fetching staff:', error);
+
     })
   },[])
   useEffect(()=>{
@@ -98,6 +106,7 @@ export default function DashboardDefault() {
     })
     .catch((error)=>{
       console.error('Error fetching staff:', error);
+  
     })
   },[])
   useEffect(()=>{
@@ -108,6 +117,7 @@ export default function DashboardDefault() {
     })
     .catch((error)=>{
       console.error('Error fetching staff:', error);
+  
     })
   },[])
 

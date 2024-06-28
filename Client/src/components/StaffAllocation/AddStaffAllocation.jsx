@@ -5,8 +5,9 @@ import { Button, Grid, MenuItem, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { Done } from '@mui/icons-material';
-
+import { useSnackbar } from 'notistack';
 const AddStaffAllocation = () => {
+    const { enqueueSnackbar } = useSnackbar();
     const [clsData,setClsData] = useState([]);
     const [secData,setSecData] = useState([]);
     const [subData,setSubData] = useState([]);
@@ -69,6 +70,8 @@ const AddStaffAllocation = () => {
         })
         .catch((err)=>{
           console.log('The error is :',err);
+          
+          enqueueSnackbar(err, { variant: 'error' });
         })
     },[])
     useEffect(()=>{
@@ -78,6 +81,8 @@ const AddStaffAllocation = () => {
         })
         .catch((err)=>{
           console.log('The error is :',err);
+          
+          enqueueSnackbar(err, { variant: 'error' });
         })
     },[])
 
@@ -91,6 +96,8 @@ const AddStaffAllocation = () => {
             })
             .catch((err) => {
                 console.log('The error is :', err);
+                
+             enqueueSnackbar(err, { variant: 'error' });
             });
         }
     }, [formData.cls_id]);
@@ -104,6 +111,8 @@ const AddStaffAllocation = () => {
             })
             .catch((err) => {
                 console.log('The error is :', err);
+                
+             enqueueSnackbar(err, { variant: 'error' });
             });
         }
     }, [formData.cls_id,formData.cls_allocation_id]);
@@ -140,6 +149,8 @@ const AddStaffAllocation = () => {
         })
         .catch((err)=>{
             console.log("Error save staff allocation")
+            
+            enqueueSnackbar(err, { variant: 'error' });
         })
     }
   return (

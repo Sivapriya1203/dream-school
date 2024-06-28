@@ -3,8 +3,9 @@ import { Grid, MenuItem, TextField, Button } from '@mui/material';
 import axios from 'axios';
 import config from '../../config';
 import { useNavigate } from 'react-router';
-
+import { useSnackbar } from 'notistack';
 function AddDiscount({ data, onClose }) {
+    const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         fees_id: data.fees_id,
@@ -75,11 +76,14 @@ function AddDiscount({ data, onClose }) {
         axios.post(`${config.apiURL}/discount/saveDiscount`, payload)
             .then((res) => {
                 console.log("Data Saved.");
+                enqueueSnackbar('Data saved', { variant: 'success' });
                 navigate(`/singleFeesDiscountIndex/${data.fees_id}`);
                 onClose();
             })
             .catch((err) => {
                 console.log("Error.", err);
+                
+             enqueueSnackbar(err, { variant: 'error' });
             });
     };
 

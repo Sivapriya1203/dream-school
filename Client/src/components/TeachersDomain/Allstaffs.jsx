@@ -15,6 +15,7 @@ import config from '../../config'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Add, Delete, Edit } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 function AllStaffs() {
   const [staffData, setStaffData] = useState([]);
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -23,7 +24,7 @@ function AllStaffs() {
   const [dataPerPage, setDataPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchedVal, setSearchedVal] = useState('');
-
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     Axios.get(`${config.apiURL}/staffs/getStaffs`)
       .then((res) => {
@@ -32,6 +33,8 @@ function AllStaffs() {
       })
       .catch((err) => {
         console.log('Error:', err);
+        
+        enqueueSnackbar(err, { variant: 'error' });
       });
   }, [openUpdate, dlt]);
 
@@ -67,9 +70,12 @@ function AllStaffs() {
       .then((res) => {
         console.log("Deleted successfully :");
         setDlt(true);
+        enqueueSnackbar('Staff data deleted sucessfully', { variant: 'success' });
       })
       .catch((err) => {
         console.log('Error:', err);
+        
+        enqueueSnackbar(err, { variant: 'error' });
       });
   };
 

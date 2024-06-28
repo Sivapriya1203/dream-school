@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Grid, TextField, Button } from '@mui/material';
 import axios from 'axios';
 import config from '../../config';
-
+import { useSnackbar } from 'notistack';
 function Allotfees({ data, onClose }) {
+    const { enqueueSnackbar } = useSnackbar();
     const [totalfees, setTotalfees] = useState(0); // Initialize totalfees state with 0
     const [studentinfo, setStudentinfo] = useState({
         stu_name: data ? data.stu_name : "",
@@ -54,6 +55,7 @@ function Allotfees({ data, onClose }) {
             })
             .catch((err) => {
                 console.log("Error updating fees.", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     };
 
