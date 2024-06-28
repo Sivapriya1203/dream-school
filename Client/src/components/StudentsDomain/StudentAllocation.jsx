@@ -15,8 +15,10 @@ import config from '../../config';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Add, Edit } from '@mui/icons-material';
-
+import { useSnackbar } from 'notistack';
 function StudentAllocation() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { cls_id } = useParams();
   const [studentData, setStudentData] = useState(null);
   const [error, setError] = useState(null);
@@ -50,6 +52,7 @@ function StudentAllocation() {
         })
         .catch((err) => {
           console.log(err);
+          enqueueSnackbar(err, { variant: 'error' });
         });
     }
   }, [cls_id]);
@@ -129,7 +132,8 @@ function StudentAllocation() {
     })
     .catch((err) => {
       console.error('Error assigning section:', err);
-      alert('Failed to assign section');
+      enqueueSnackbar('Failed to assign section', { variant: 'error' });
+   
     });
   };
 

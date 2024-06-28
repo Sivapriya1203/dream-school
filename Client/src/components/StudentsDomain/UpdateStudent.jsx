@@ -3,8 +3,10 @@ import { Grid, MenuItem, Select, TextField, Button, Box } from '@mui/material';
 import axios from 'axios';
 import config from '../../config';
 import { Done } from '@mui/icons-material';
-
+import { useSnackbar } from 'notistack';
 function UpdateStudent({ data, onClose }) {
+    const { enqueueSnackbar } = useSnackbar();
+
     const [staffData, setStaffData] = useState([]);
     const [clsData, setClsData] = useState([]);
     const [secData, setSecData] = useState([]);
@@ -145,6 +147,7 @@ function UpdateStudent({ data, onClose }) {
             })
             .catch((err) => {
                 console.log('Error fetching staff data:', err);
+                enqueueSnackbar('Error fetching staff data:', { variant: 'error' });
             });
 
         axios
@@ -154,6 +157,7 @@ function UpdateStudent({ data, onClose }) {
             })
             .catch((err) => {
                 console.log('Error fetching Class data', err);
+                enqueueSnackbar('Error fetching Class data', { variant: 'error' });
             });
 
         axios
@@ -163,6 +167,7 @@ function UpdateStudent({ data, onClose }) {
             })
             .catch((err) => {
                 console.log('error in fetching section data :', err);
+                enqueueSnackbar('error in fetching section data :', { variant: 'error' });
             });
     }, []);
 
@@ -215,6 +220,7 @@ function UpdateStudent({ data, onClose }) {
             .catch((err) => {
                 console.log('Error:', err);
                 console.log('Data:', studentinfo);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     };
 

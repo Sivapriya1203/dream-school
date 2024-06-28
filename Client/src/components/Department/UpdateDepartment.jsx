@@ -3,11 +3,14 @@ import { Grid, TextField, Button, MenuItem } from '@mui/material';
 import axios from 'axios';
 import config from '../../config'
 import { Done } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 function UpdateDepartment({ data, onClose }) {
+    const { enqueueSnackbar } = useSnackbar();
     const [deptInfo, setDeptInfo] = useState({
         dept_id: data ? data.dept_id : "",
         dept_name: data ? data.dept_name : "",
     });
+    
     const [errorDept,setErrorDept] = useState({
         dept_id:"",
         dept_name:""
@@ -54,9 +57,11 @@ function UpdateDepartment({ data, onClose }) {
             .then((res) => {
                 console.log("Success");
                 onClose();
+                enqueueSnackbar('Data Edited sucessfully', { variant: 'success' });
             })
             .catch((err) => {
                 console.log("Error:", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     };
 

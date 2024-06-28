@@ -20,12 +20,14 @@ import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import config from '../../../config'
+import { useSnackbar } from 'notistack';
 
 const AuthLogin = ({ isDemo = false }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [staffData, setStaffData] = useState([]);
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     axios.get(`${config.apiURL}/staffs/getStaffs`)
@@ -34,6 +36,7 @@ const AuthLogin = ({ isDemo = false }) => {
       })
       .catch((err) => {
         console.log("Error Staff Data fetching", err)
+        enqueueSnackbar("Error Staff Data fetching", { variant: 'error' });
       })
   }, [])
 

@@ -26,6 +26,7 @@ const SiblingStudentsIndex = () =>{
         })
         .catch((err)=>{
             console.log("Error fetching Sibling data")
+            enqueueSnackbar(err, { variant: 'error' });
         })
     },[]);
 

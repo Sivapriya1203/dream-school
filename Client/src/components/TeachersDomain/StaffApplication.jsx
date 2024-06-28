@@ -3,8 +3,9 @@ import { Grid, TextField, MenuItem, Button } from '@mui/material';
 import axios from 'axios';
 import config from '../../config';
 import { useNavigate } from 'react-router-dom';
-
+import { useSnackbar } from 'notistack';
 function StaffApplication() {
+    const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const [deptInfo, setDeptInfo] = useState([]);
     const [roleData, setRoleData] = useState([]);
@@ -105,6 +106,7 @@ function StaffApplication() {
             })
             .catch((err) => {
                 console.log('Error:', err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     }, []);
 
@@ -116,6 +118,7 @@ function StaffApplication() {
                 })
                 .catch((err) => {
                     console.log('Error:', err);
+                    enqueueSnackbar(err, { variant: 'error' });
                 });
         }
     }, [staffInfo.dept_id]);
@@ -154,9 +157,12 @@ function StaffApplication() {
                     ...staffInfo,
                     staff_img: null, // Reset staff_img to null
                 });
+                enqueueSnackbar('Staff data added sucessfully', { variant: 'success' });
+                navigate('/allstaffs')
             })
             .catch((err) => {
                 console.log("Error:", err);
+                enqueueSnackbar(err, { variant: 'error' });
                 // Handle errors
             });
     };

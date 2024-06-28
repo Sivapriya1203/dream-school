@@ -7,10 +7,10 @@ import {
   FontSizeOutlined,
   LoadingOutlined
 } from '@ant-design/icons';
-
+import Groups2TwoToneIcon from '@mui/icons-material/Groups2TwoTone';
 import SchoolIcon from '@mui/icons-material/School';
 import GroupIcon from '@mui/icons-material/Group';
-
+import GroupAddTwoToneIcon from '@mui/icons-material/GroupAddTwoTone';
 // icons
 const icons = {
   SchoolIcon,
@@ -20,7 +20,9 @@ const icons = {
   BarcodeOutlined,
   AntDesignOutlined,
   LoadingOutlined,
-  AppstoreAddOutlined
+  AppstoreAddOutlined,
+  Groups2TwoToneIcon,
+  GroupAddTwoToneIcon
 
 };
 
@@ -45,7 +47,7 @@ const admindomains = {
       title: 'Teachers',
       type: 'item',
       url: '/allstaffs',
-      icon: icons.GroupIcon,
+      icon: icons.Groups2TwoToneIcon,
 
     },
    

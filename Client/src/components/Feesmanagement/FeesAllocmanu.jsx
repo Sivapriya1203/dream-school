@@ -3,8 +3,9 @@ import axios from 'axios';
 import config from '../../config';
 import { Grid, TextField, Button, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // Ensure correct import
-
+import { useSnackbar } from 'notistack';
 function FeesAllocmanu() {
+  const { enqueueSnackbar } = useSnackbar();
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [tuitionFees, setTuitionFees] = useState('');
@@ -20,6 +21,7 @@ function FeesAllocmanu() {
       })
       .catch((err) => {
         console.log("Error fetching class data", err);
+        enqueueSnackbar("Error fetching class data", { variant: 'error' });
       });
   }, []);
 
@@ -61,6 +63,7 @@ function FeesAllocmanu() {
       .catch((err) => {
         console.log("Error:", err);
         console.log("Data not sent:", formData);
+        enqueueSnackbar("Data not sent:", { variant: 'error' });
       });
   };
 

@@ -11,8 +11,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Checkbox, FormControl, FormControlLabel, TextField } from '@mui/material';
 import { useParams, Link } from 'react-router-dom';
-
+import { useSnackbar } from 'notistack';
 function VanAttendance() {
+    const { enqueueSnackbar } = useSnackbar();
     const { staff_id } = useParams();
     const [vanStudents, setVanStudents] = useState([]);
     const [attendanceState, setAttendanceState] = useState({
@@ -28,6 +29,7 @@ function VanAttendance() {
             })
             .catch((err) => {
                 console.error('Error fetching van students data:', err);
+                enqueueSnackbar('Error fetching van students data:', { variant: 'error' });
             });
     }, [staff_id]);
 
@@ -84,6 +86,7 @@ function VanAttendance() {
             console.log("Attendance data submitted successfully!");
         } catch (err) {
             console.error('Error saving attendance:', err);
+            enqueueSnackbar('Error saving attendance:', { variant: 'error' });
             // Handle error scenario
         }
     };

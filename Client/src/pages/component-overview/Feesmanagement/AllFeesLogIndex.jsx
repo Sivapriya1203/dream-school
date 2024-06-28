@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, FormControl, Grid, MenuItem, Select, TextField } from '@mui/material';
-
+import { useSnackbar } from 'notistack';
 import config from '../../../config';
 import { Link, useNavigate } from 'react-router-dom';
 import FeesEditStud from './FeesEditStud';
@@ -24,6 +24,8 @@ function AllFeesLogIndex() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchedVal, setSearchedVal] = useState('');
   const [selectedData, setSelectedData] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
+
 
   const navigate = useNavigate();
 
@@ -34,6 +36,7 @@ function AllFeesLogIndex() {
       })
       .catch((err) => {
         console.log('Error:', err);
+        enqueueSnackbar(err, { variant: 'error' });
       });
   }, [openUpdate]);
 

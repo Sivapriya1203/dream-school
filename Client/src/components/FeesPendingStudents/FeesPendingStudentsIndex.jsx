@@ -12,12 +12,14 @@ import Paper from '@mui/material/Paper';
 import { FormControl, Grid, Select, TextField } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-
+import { useSnackbar } from 'notistack';
 const FeesPendingStudentsIndex = () => {
   const [stuData, setStuData] = useState([]);
   const [dataPerPage, setDataPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchedVal, setSearchedVal] = useState('');
+  const { enqueueSnackbar } = useSnackbar();
+
 
   useEffect(() => {
     axios.get(`${config.apiURL}/dashboard/feePendingStudents`)
@@ -26,6 +28,7 @@ const FeesPendingStudentsIndex = () => {
       })
       .catch((err) => {
         console.log("Error fetching students data", err);
+        enqueueSnackbar("Error fetching students data", { variant: 'error' });
       });
   }, []);
 

@@ -15,7 +15,7 @@ import axios from 'axios';
 import EditDiscount from './EditDiscount';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-
+import { useSnackbar } from 'notistack';
 function DiscountIndex() {
   const [discountData,setDiscountData] = useState([]);
   const [updateData,setUpdateData] = useState([]);
@@ -23,7 +23,7 @@ function DiscountIndex() {
   const [dataPerPage, setDataPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchedVal, setSearchedVal] = useState('');
-
+  const { enqueueSnackbar } = useSnackbar()
   useEffect(()=>{
     axios.get(`${config.apiURL}/discount/getDiscount`)
     .then((res)=>{
@@ -31,6 +31,7 @@ function DiscountIndex() {
     })
     .catch((err)=>{
       console.log("Error fetching discount data.")
+      enqueueSnackbar(err, { variant: 'error' });
     })
   },[openDiscount]);
 

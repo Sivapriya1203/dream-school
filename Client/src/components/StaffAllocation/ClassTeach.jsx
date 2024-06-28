@@ -5,8 +5,9 @@ import { Button, Grid, MenuItem, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { Done } from '@mui/icons-material';
-
+import { useSnackbar } from 'notistack';
 const ClassTeach = () => {
+    const { enqueueSnackbar } = useSnackbar();
     const [clsData, setClsData] = useState([]);
     const [secData, setSecData] = useState([]);
     const [staffData, setStaffData] = useState([]);
@@ -62,6 +63,7 @@ const ClassTeach = () => {
             })
             .catch((err) => {
                 console.log('The error is:', err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     }, []);
 
@@ -72,6 +74,7 @@ const ClassTeach = () => {
             })
             .catch((err) => {
                 console.log('The error is:', err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     }, []);
 
@@ -84,6 +87,7 @@ const ClassTeach = () => {
                 })
                 .catch((err) => {
                     console.log('The error is:', err);
+                    enqueueSnackbar(err, { variant: 'error' });
                 });
         }
     }, [formData.cls_id]);
@@ -123,6 +127,7 @@ const ClassTeach = () => {
             })
             .catch((err) => {
                 console.log("Error saving staff allocation", err);
+                enqueueSnackbar("Error saving staff allocation", { variant: 'error' });
             });
     };
 

@@ -16,8 +16,11 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Add, Edit } from '@mui/icons-material';
 import Allotfees from './Allotfees';
+import { useSnackbar } from 'notistack';
 
 function Feespage() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { cls_id } = useParams();
   const [studentData, setStudentData] = useState(null);
   const [error, setError] = useState(null);
@@ -36,6 +39,7 @@ function Feespage() {
           console.log(res.data)
         })
         .catch((err) => {
+          enqueueSnackbar("Error in fetching data: ", { variant: 'error' });
           setError("Error in fetching data: " + (err.response?.data?.message || err.message));
         });
     } else {

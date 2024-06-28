@@ -3,12 +3,12 @@ import { Button, MenuItem, Select } from '@mui/material';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import config from '../../config';
-
+import { useSnackbar } from 'notistack';
 function Exams() {
   const [examNames, setExamNames] = useState([]);
   const [selectedExam, setSelectedExam] = useState('');
   const [examData, setExamData] = useState([]);
-
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     // Fetch exam names on component mount
     axios.get(`${config.apiURL}/students/getexamsalloc`)
@@ -17,6 +17,7 @@ function Exams() {
       })
       .catch((err) => {
         console.log(err);
+        enqueueSnackbar(err, { variant: 'error' });
       });
   }, []);
 
@@ -38,6 +39,7 @@ console.log(selectedExamObject)
         })
         .catch((err) => {
           console.error('Error fetching exam data:', err);
+          enqueueSnackbar(err, { variant: 'error' });
         });
     } else {
       console.error('Selected exam not found in examNames array.');
