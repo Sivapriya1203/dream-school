@@ -17,6 +17,7 @@ import PayFeesLog from './PayFeesLog';
 import AddDiscount from 'components/Discount/AddDiscount';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { useSnackbar } from 'notistack';
 
 function Feespay() {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ function Feespay() {
   const [dataPerPage, setDataPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchedVal, setSearchedVal] = useState('');
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     Axios.get(`${config.apiURL}/feeAllocation/getFeesAllocation`)
@@ -41,6 +43,7 @@ function Feespay() {
       })
       .catch((err) => {
         console.log('Error:', err);
+        enqueueSnackbar(err, { variant: 'error' });
       });
   }, [openUpdate, dlt]);
 
@@ -80,6 +83,7 @@ function Feespay() {
     })
     .catch((err)=>{
       console.log('not checked')
+      enqueueSnackbar(err, { variant: 'error' });
     })
 
   },[])

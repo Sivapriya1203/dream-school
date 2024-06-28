@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Grid, TextField, Button } from '@mui/material';
 import axios from 'axios';
 import config from '../../../config';
-
+import { useSnackbar } from 'notistack';
 function FeesEditStud({ data, onClose }) {
+    const { enqueueSnackbar } = useSnackbar();
     const [editedStudFee, setEditedStudFee] = useState({
         fees_id: data ? data.fees_id : "",
         fee_category: data ? data.fee_category : "",
@@ -73,6 +74,7 @@ function FeesEditStud({ data, onClose }) {
             })
             .catch((err) => {
                 console.log("Error.", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     };
 

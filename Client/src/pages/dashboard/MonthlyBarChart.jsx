@@ -4,10 +4,12 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import ReactApexChart from 'react-apexcharts';
 import config from '../../config';
-
+import { useSnackbar } from 'notistack';
 // ==============================|| MONTHLY BAR CHART ||============================== //
 
 const MonthlyBarChart = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const theme = useTheme();
   const { secondary } = theme.palette.text;
   const info = theme.palette.info.light;
@@ -69,6 +71,7 @@ const MonthlyBarChart = () => {
       })
       .catch(error => {
         console.error('Error fetching data:', error);
+   
       });
   }, []); // Only execute once on component mount
 

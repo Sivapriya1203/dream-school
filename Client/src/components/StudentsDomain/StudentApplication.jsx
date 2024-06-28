@@ -4,9 +4,10 @@ import axios from 'axios';
 import config from '../../config';
 import { useNavigate } from 'react-router';
 import { Done } from '@mui/icons-material';
-
+import { useSnackbar } from 'notistack';
 function StudentApplication() {
     const navigate = useNavigate();
+      const { enqueueSnackbar } = useSnackbar();
     const [staffData, setStaffData] = useState([]);
     const [clsData, setClsData] = useState([]);
     const [secData, setSecData] = useState([]);
@@ -137,7 +138,7 @@ function StudentApplication() {
                 break;
         }
 
-        return errmsg;
+        return  errmsg
     };
 
     useEffect(() => {
@@ -163,6 +164,7 @@ function StudentApplication() {
             })
             .catch((err) => {
                 console.log('Error fetching section data:', err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     }, []);
 
@@ -184,6 +186,7 @@ function StudentApplication() {
             const error = handleValidation(name, value);
             if (error) {
                 formErrors[name] = error;
+                enqueueSnackbar(error, { variant: 'error' });
             }
         });
 
@@ -204,7 +207,8 @@ function StudentApplication() {
         })
             .then((res) => {
                 console.log("Success");
-                navigate(-1);
+                enqueueSnackbar('Student list created sucessfully', { variant: 'success' });
+        navigate('/allStudents');
                 // Reset form after submission
                 setStudentinfo({
                     staff_id: "",
@@ -233,6 +237,7 @@ function StudentApplication() {
             })
             .catch((err) => {
                 console.log("Error:", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     };
 

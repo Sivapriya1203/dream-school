@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { AreaChart, Area, XAxis as XAxisArea, YAxis as YAxisArea, CartesianGrid as CartesianGridArea, Tooltip as TooltipArea } from 'recharts';
 import config from '../../config'
+import { useSnackbar } from 'notistack';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -18,6 +19,7 @@ const getMonthName = (dateString) => {
 // ==============================|| INCOME AREA CHART ||============================== //
 
 export default function IncomeAreaChart({ slot }) {
+  const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
   const { primary, secondary } = theme.palette.text;
   const line = theme.palette.divider;
@@ -42,6 +44,7 @@ export default function IncomeAreaChart({ slot }) {
       })
       .catch(error => {
         console.error('Error fetching data:', error);
+        enqueueSnackbar(error, { variant: 'error' });
       });
   }, [slot]);
 

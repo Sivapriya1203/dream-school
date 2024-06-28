@@ -3,12 +3,16 @@ import axios from 'axios';
 import { Button, ButtonBase } from '@mui/material';
 import config from '../../config';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import styled from '@emotion/styled';
+=======
+import { useSnackbar } from 'notistack';
+>>>>>>> dce7fac993fc0f314dd2cbc7f1ad2c3377fb5a75
 
   
 function StaffAttendance() {
   const staff_id = sessionStorage.getItem('staff_id');
-
+  const { enqueueSnackbar } = useSnackbar();
   const handleAttendance = async (statusn) => {
     try {
       const currentDate = new Date();
@@ -25,7 +29,8 @@ function StaffAttendance() {
       alert(`${statusn.charAt(0).toUpperCase() + statusn.slice(1)} recorded successfully at ${formattedTime}`);
     } catch (error) {
       console.error(`Error recording ${statusn}:`, error);
-      alert(`Failed to record ${statusn}`);
+      enqueueSnackbar(`Failed to record ${statusn}`, { variant: 'error' });
+    ;
     }
   };
 

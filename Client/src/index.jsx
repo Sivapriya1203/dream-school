@@ -27,7 +27,7 @@ import '@fontsource/public-sans/500.css';
 import '@fontsource/public-sans/600.css';
 import '@fontsource/public-sans/700.css';
 import 'bootstrap/dist/css/bootstrap.css';
-
+import { SnackbarProvider } from 'notistack';
 // project import
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -36,7 +36,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // ==============================|| MAIN - REACT DOM RENDER ||============================== //
 
-root.render(<App />);
+root.render(
+<SnackbarProvider>
+<App />
+    </SnackbarProvider>);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -3,14 +3,28 @@ import { Grid, Typography, Box } from '@mui/material';
 import axios from 'axios';
 import config from '../../config';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
+<<<<<<< HEAD
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import TeacherProfile from './TeacherProfile';
+=======
+import MainCard from 'components/MainCard';
+import { useSnackbar } from 'notistack';
+
+import { Link } from 'react-router-dom';
+>>>>>>> dce7fac993fc0f314dd2cbc7f1ad2c3377fb5a75
 
 export default function DashboardDefault() {
   const [studentsCount, setStudentsCount] = useState(0);
   const [staffsCount, setStaffsCount] = useState(0);
+<<<<<<< HEAD
   const [chartData, setChartData] = useState([]);
 
+=======
+  const [totalRevenue, setTotalRevenue] = useState();
+  const [selectedYear,setSelectedYear] = useState('2024-2025')
+  const [siblingCount,setSiblingCount] = useState();
+  const { enqueueSnackbar } = useSnackbar();
+>>>>>>> dce7fac993fc0f314dd2cbc7f1ad2c3377fb5a75
   useEffect(() => {
     // Fetching data for Student Attendance
     axios.get(`${config.apiURL}/dashboard/feePendingStudents`)
@@ -20,6 +34,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching students:', error);
+        enqueueSnackbar('Error fetching students:', { variant: 'error' });
       });
 
     // Fetching data for Classwise First Mark
@@ -30,6 +45,7 @@ export default function DashboardDefault() {
       })
       .catch((error) => {
         console.error('Error fetching staff:', error);
+        enqueueSnackbar('Error fetching staff:', { variant: 'error' });
       });
 
     // Fetching data for Bar Chart
@@ -42,6 +58,34 @@ export default function DashboardDefault() {
       });
   }, []);
 
+<<<<<<< HEAD
+=======
+  useEffect(()=>{
+    axios.get(`${config.apiURL}/dashboard/totalPaidAmount/${selectedYear}`)
+      .then((res) => {
+        setTotalRevenue(res.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching staff:', error);
+        enqueueSnackbar('Error fetching staff:', { variant: 'error' });
+      });
+  },[])
+
+  useEffect(()=>{
+    axios.get(`${config.apiURL}/students/getSiblings`)
+      .then((res) => {
+        setSiblingCount(res.data);
+        console.log("Sibling :",siblingCount)
+      })
+      .catch((error) => {
+        console.error('Error fetching staff:', error);
+        enqueueSnackbar('Error fetching staff:', { variant: 'error' });
+      });
+  },[])
+
+  
+
+>>>>>>> dce7fac993fc0f314dd2cbc7f1ad2c3377fb5a75
   return (
     <Grid container spacing={1} sx={{ backgroundColor: 'lightblue', padding: 1, borderRadius: 2 }}>
 

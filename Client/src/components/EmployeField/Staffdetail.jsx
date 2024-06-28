@@ -2,12 +2,16 @@ import axios from 'axios';
 import config from '../../config';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+<<<<<<< HEAD
 import { color } from 'framer-motion';
+=======
+import { useSnackbar } from 'notistack';
+>>>>>>> dce7fac993fc0f314dd2cbc7f1ad2c3377fb5a75
 
 function Staffdetail() {
   const [detail, setDetails] = useState([]);
   const { staff_id } = useParams();
-
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     axios.get(`${config.apiURL}/staffs/getattenancedetails/${staff_id}`)
       .then((res) => {
@@ -15,6 +19,7 @@ function Staffdetail() {
       })
       .catch((err) => {
         console.log(err);
+        enqueueSnackbar(err, { variant: 'error' });
       });
   }, [staff_id]);
 

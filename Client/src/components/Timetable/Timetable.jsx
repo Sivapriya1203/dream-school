@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Grid, MenuItem, TextField } from '@mui/material';
 import axios from 'axios';
 import config from '../../config';
+import { useSnackbar } from 'notistack';
 
 function Timetable() {
+    const { enqueueSnackbar } = useSnackbar();
     const [secData, setSecData] = useState([]);
     const [clsData, setClsData] = useState([]);
     const [formData, setFormData] = useState({
@@ -26,6 +28,7 @@ function Timetable() {
             })
             .catch((err) => {
                 console.log("Error fetching class allocation data", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     }, []);
 
@@ -37,6 +40,7 @@ function Timetable() {
                 })
                 .catch((err) => {
                     console.log("Error fetching section allocation data", err);
+                    enqueueSnackbar(err, { variant: 'error' });
                 });
         } else {
             setSecData([]);

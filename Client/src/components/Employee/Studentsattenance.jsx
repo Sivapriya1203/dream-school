@@ -3,11 +3,12 @@ import config from '../../config';
 import React, { useState, useEffect } from 'react';
 import { Button, CircularProgress, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-
+import { useSnackbar } from 'notistack';
 function StudentsAttendance() {
   const [classTeachers, setClassTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     axios.get(`${config.apiURL}/staffAllocation/getclassteach`)
@@ -18,6 +19,7 @@ function StudentsAttendance() {
       .catch((error) => {
         console.error("Error fetching class teachers data:", error);
         setError("Failed to fetch class teachers data");
+        enqueueSnackbar(error, { variant: 'error' });
         setLoading(false);  // Data fetching is complete, but an error occurred
       });
   }, []);

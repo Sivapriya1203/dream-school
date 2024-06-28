@@ -6,8 +6,9 @@ import { useNavigate, useParams } from "react-router";
 // import Button from "@mui/material";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/base";
-
+import { useSnackbar } from 'notistack';
 function FeeCollectionForm() {
+  const { enqueueSnackbar } = useSnackbar();
   const { stu_id } = useParams();
   const [payfee, setPayfee] = useState([]);
   const navigate = useNavigate()
@@ -20,6 +21,7 @@ function FeeCollectionForm() {
       })
       .catch((err) => {
         console.log(err);
+        enqueueSnackbar(err, { variant: 'error' });
       });
   }, [stu_id, config.apiURL]);
 
@@ -59,12 +61,13 @@ function FeeCollectionForm() {
         console.log(formDataToSend);
         await axios.post(`${config.apiURL}/feeAllocation/feeslogdata`, formDataToSend);
       }
-
-      alert('Fees data submitted successfully!');
+      enqueueSnackbar('Fees data submitted successfully!', { variant: 'success' });
+      
 
 navigate('/')
     } catch (err) {
       console.error('Error saving fees data:', err);
+      enqueueSnackbar('Failed to submit fees data', { variant: 'error' });
       alert('Failed to submit fees data');
     }
   };

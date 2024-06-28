@@ -3,9 +3,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import config from '../../config'
-
+import { useSnackbar } from 'notistack';
 function Feesallocstudent() {
   const [classes, setClasses] = useState([]); // Initialize with an empty array
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     axios.get(`${config.apiURL}/clsAndSec/getclass`)
@@ -15,6 +16,7 @@ function Feesallocstudent() {
       })
       .catch((err) => {
         console.log("classes err :",err);
+        enqueueSnackbar(err, { variant: 'error' });
       });
   }, []); // Add dependency array to run the effect only once
 

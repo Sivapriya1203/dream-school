@@ -10,9 +10,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Checkbox, FormControl, FormControlLabel, TextField } from '@mui/material';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
 
+=======
+import { Link, useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+>>>>>>> dce7fac993fc0f314dd2cbc7f1ad2c3377fb5a75
 function Students() {
+    const { enqueueSnackbar } = useSnackbar();
     const staff_id = sessionStorage.getItem('staff_id');
     const [studentData, setStudentData] = useState([]);
     const [attendanceState, setAttendanceState] = useState({
@@ -28,6 +34,7 @@ function Students() {
             })
             .catch((err) => {
                 console.error('Error fetching student data:', err);
+                enqueueSnackbar('Error fetching student data:', { variant: 'error' });
             });
     }, [staff_id, config.apiURL]);
 
@@ -111,10 +118,11 @@ function Students() {
 
                 console.log(`Updated attendance for student ${studentId}:`, formData);
             }
-
+            enqueueSnackbar("Attendance data submitted successfully!", { variant: 'success' });
             console.log("Attendance data submitted successfully!");
         } catch (err) {
             console.error('Error saving attendance:', err);
+            enqueueSnackbar('Error saving attendance:', { variant: 'error' });
             // Handle error scenario
         }
     };

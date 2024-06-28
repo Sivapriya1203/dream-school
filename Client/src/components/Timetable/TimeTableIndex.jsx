@@ -5,8 +5,10 @@ import axios from 'axios';
 import config from '../../config';
 import { Link } from 'react-router-dom';
 import { Add } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 
 const TimeTableIndex = () => {
+    const { enqueueSnackbar } = useSnackbar();
     const [secData, setSecData] = useState([]);
     const [clsData, setClsData] = useState([]);
     const [timetableData, setTimetableData] = useState([]);
@@ -24,6 +26,7 @@ const TimeTableIndex = () => {
             })
             .catch((err) => {
                 console.log("Error fetching class allocation data", err);
+                enqueueSnackbar("Error fetching class allocation data", { variant: 'error' });
             });
     }, []);
 
@@ -35,6 +38,8 @@ const TimeTableIndex = () => {
                 })
                 .catch((err) => {
                     console.log("Error fetching section allocation data", err);
+                    enqueueSnackbar("Error fetching class allocation data", { variant: 'error' });
+          
                 });
         } else {
             setSecData([]);
@@ -63,6 +68,8 @@ const TimeTableIndex = () => {
             .catch((err) => {
                 console.log("Error fetching timetable data", err);
                 setError("Error fetching timetable data.");
+                enqueueSnackbar("Error fetching timetable data", { variant: 'error' });
+          
             });
     };
 

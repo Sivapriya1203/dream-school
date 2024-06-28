@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Button, Dialog, DialogActions, DialogContent, Grid,FormControl,Select,TextField } from '@mui/material';
-
+import { useSnackbar } from 'notistack';
 import config from '../../../config';
 import { Link } from 'react-router-dom';
 import Updatefees from './Updatefees';
@@ -20,6 +20,8 @@ import { useParams } from 'react-router-dom';
 import FeesEditStud from './FeesEditStud';
 
 function FeesLogsIndex() {
+  const { enqueueSnackbar } = useSnackbar();
+
   const {fees_id} = useParams();
   const [feeData, setFeeData] = useState([]);
   const [editfee, setEditFee] = useState([]);
@@ -37,6 +39,7 @@ function FeesLogsIndex() {
       })
       .catch((err) => {
         console.log('Error:', err);
+        enqueueSnackbar(err, { variant: 'error' });
       });
     }
   }, [openUpdate]);

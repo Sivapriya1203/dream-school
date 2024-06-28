@@ -5,8 +5,10 @@ import { Button, Grid, MenuItem, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { Done } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 
 const UpdateStaffAllocation = ({ data, onClose }) => {
+    const { enqueueSnackbar } = useSnackbar();
     const [clsData, setClsData] = useState([]);
     const [secData, setSecData] = useState([]);
     const [subData, setSubData] = useState([]);
@@ -29,6 +31,7 @@ const UpdateStaffAllocation = ({ data, onClose }) => {
             })
             .catch((err) => {
                 console.log('The error is :', err);
+                enqueueSnackbar(err, { variant: 'error' });
             })
     }, [])
 
@@ -39,6 +42,7 @@ const UpdateStaffAllocation = ({ data, onClose }) => {
             })
             .catch((err) => {
                 console.log('The error is :', err);
+                enqueueSnackbar(err, { variant: 'error' });
             })
     }, [])
 
@@ -54,6 +58,7 @@ const UpdateStaffAllocation = ({ data, onClose }) => {
                 })
                 .catch((err) => {
                     console.log('The error is :', err);
+                    enqueueSnackbar(err, { variant: 'error' });
                 });
         }
         // Update the previousClsIdRef with the current cls_id
@@ -72,6 +77,7 @@ const UpdateStaffAllocation = ({ data, onClose }) => {
                 })
                 .catch((err) => {
                     console.log('The error is :', err);
+                    enqueueSnackbar(err, { variant: 'error' });
                 });
         }
         // Update the previousClsAllocationIdRef with the current cls_allocation_id
@@ -95,6 +101,7 @@ const UpdateStaffAllocation = ({ data, onClose }) => {
             })
             .catch((err) => {
                 console.log("Error save staff allocation", err);
+                enqueueSnackbar("Error save staff allocation", { variant: 'error' });
             })
     }
 

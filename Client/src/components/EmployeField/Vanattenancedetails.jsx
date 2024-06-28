@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import axios from 'axios'
 // import React, { useEffect, useState } from 'react'
 // import config from '../../config'
@@ -169,6 +170,26 @@ function VanAttendanceDetails() {
     textAlign:'center',
      border:'2px solid black'
   };
+=======
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import config from '../../config'
+import { useParams } from 'react-router'
+import { useSnackbar } from 'notistack';
+function Vanattenancedetails() {
+    const { enqueueSnackbar } = useSnackbar();
+    const {staff_id} = useParams()
+    const [vanattentdetail,setVanattentdetail]= useState([])
+    useEffect(()=>{
+   axios.get(`${config.apiURL}/students/vanattenancedetails/${staff_id}`)
+   .then((res)=>{
+    setVanattentdetail(res.data)
+   })
+   .catch((err)=>{
+    console.log(err)
+    enqueueSnackbar(err, { variant: 'error' });
+   })
+>>>>>>> dce7fac993fc0f314dd2cbc7f1ad2c3377fb5a75
 
   return (
     <div style={{ padding: '20px', }}>

@@ -7,10 +7,12 @@ import {
   FontSizeOutlined,
   LoadingOutlined
 } from '@ant-design/icons';
-
+import { FcDepartment } from "react-icons/fc";
 import SchoolIcon from '@mui/icons-material/School';
 import GroupIcon from '@mui/icons-material/Group';
-
+import { PiStudentFill } from "react-icons/pi";
+import { MdOutlinePayment } from "react-icons/md";
+import GroupAddTwoToneIcon from '@mui/icons-material/GroupAddTwoTone';
 // icons
 const icons = {
   SchoolIcon,
@@ -20,8 +22,12 @@ const icons = {
   BarcodeOutlined,
   AntDesignOutlined,
   LoadingOutlined,
-  AppstoreAddOutlined
-
+  AppstoreAddOutlined,
+  FcDepartment,
+  PiStudentFill,
+  MdOutlinePayment,
+  GroupAddTwoToneIcon
+ 
 };
 
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
@@ -36,14 +42,14 @@ const admindepartment = {
       title: 'Department Allocation',
       type: 'item',
       url: '/department',
-      icon: icons.SchoolIcon
+      icon: icons.FcDepartment
     },
     {
       id: 'staff-allocation',
       title: 'Teacher Allocation',
       type: 'item',
       url: '/staffAllocationIndex',
-      icon: icons.GroupIcon,
+      icon: icons.GroupAddTwoToneIcon,
 
     },
     {
@@ -51,14 +57,14 @@ const admindepartment = {
       title: 'Student Allocation',
       type: 'item',
       url: '/allocation',
-      icon: icons.SchoolIcon
+      icon: icons.PiStudentFill 
     },
     {
       id: 'Fees Allocation',
       title: 'Fees Allocation',
       type: 'item',
       url: '/feescomponents',
-      icon: icons.SchoolIcon
+      icon: icons. MdOutlinePayment
     },
     
     

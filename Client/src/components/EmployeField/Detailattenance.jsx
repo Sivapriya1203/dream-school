@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // // import axios from 'axios'
 // // import React, { useEffect, useState } from 'react'
 // // import config from '../../config'
@@ -6,6 +7,17 @@
 // // function Detailattenance() {
 
 // //     const {staff_id} = useParams()
+=======
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import config from '../../config'
+import { useParams } from 'react-router'
+import { useSnackbar } from 'notistack';
+function Detailattenance() {
+
+    const {staff_id} = useParams()
+    const { enqueueSnackbar } = useSnackbar();
+>>>>>>> dce7fac993fc0f314dd2cbc7f1ad2c3377fb5a75
 
 // //     const [attendanceData,setAttendancedata]= useState([])
 // //     useEffect(()=>{
@@ -133,6 +145,7 @@ function DetailAttendance() {
 
     useEffect(() => {
         axios.get(`${config.apiURL}/students/detailattenance/${staff_id}`)
+<<<<<<< HEAD
             .then((res) => {
                 setAttendanceData(res.data);
             })
@@ -140,6 +153,15 @@ function DetailAttendance() {
                 console.log(err);
             });
     }, [staff_id]);
+=======
+        .then((res)=>{
+            setAttendancedata(res.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+            enqueueSnackbar(err, { variant: 'error' });
+        })
+>>>>>>> dce7fac993fc0f314dd2cbc7f1ad2c3377fb5a75
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };

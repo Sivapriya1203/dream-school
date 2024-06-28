@@ -3,10 +3,10 @@ import { Grid, Box, Button, FormControl, FormControlLabel, FormLabel, InputLabel
 import axios from 'axios'
 import config from '../../../config';
 import { useNavigate } from 'react-router';
-
+import { useSnackbar } from 'notistack';
 function FeesApplication() {
     const navigate = useNavigate()
-
+    const { enqueueSnackbar } = useSnackbar();
     const [rollno,setRollno] = useState([]);
     const [studentinfo, setStudentinfo] = useState({
         roll_no: "",
@@ -59,6 +59,7 @@ function FeesApplication() {
         })
         .catch((err) => {
             console.log("Error fetching Class data", err);
+            enqueueSnackbar("Error fetching Class data", { variant: 'error' });
         });
 
       
@@ -94,6 +95,7 @@ function FeesApplication() {
             .catch((err) => {
                 console.log("Error:", err);
                 console.log("Data:", studentinfo);
+                enqueueSnackbar(err, { variant: 'error' });
             });
         
         navigate(-1);

@@ -6,7 +6,11 @@ import config from '../../config';
 import DoneIcon from '@mui/icons-material/Done';
 
 
+import { useSnackbar } from 'notistack';
+
 const AddDepartment = () => {
+    const { enqueueSnackbar } = useSnackbar();
+
     const [formData, setFormData] = useState({
         dept_name: ""
     });
@@ -58,11 +62,13 @@ const AddDepartment = () => {
         axios.post(`${config.apiURL}/department/saveDept`, formData)
             .then((res) => {
                 setFormData({ dept_name: '' });
+                enqueueSnackbar('Department added sucessfully', { variant: 'success' });
                 console.log(res);
                 navigate('/department');
             })
             .catch((err) => {
                 console.log("Error Form Data added :", err);
+                enqueueSnackbar(err, { variant: 'error' });
             });
     };
 
